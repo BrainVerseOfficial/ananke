@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - ascnedryx</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><a href="index.html">ascnedryx</a></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="signin.html">Sign In</a></li>
+                <li><a href="signup.html" class="active">Sign Up</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="auth-section">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h1 class="auth-title">Create Your Account</h1>
+                <p class="auth-subtitle">Join ascnedryx today</p>
+                
+                <form class="auth-form" id="signupForm">
+                    <div class="form-group">
+                        <label for="fullname">Full Name</label>
+                        <input type="text" id="fullname" name="fullname" placeholder="John Doe" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="••••••••" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="••••••••" required>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label for="terms">I agree to the Terms of Service and Privacy Policy</label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-full">Sign Up</button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="signin.html">Sign In</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            const formData = {
+                fullname: document.getElementById('fullname').value,
+                email: document.getElementById('email').value,
+                username: document.getElementById('username').value,
+                password: password
+            };
+            
+            // Store user data in localStorage (for demo purposes)
+            localStorage.setItem('ascnedryx_user', JSON.stringify(formData));
+            localStorage.setItem('ascnedryx_loggedIn', 'true');
+            
+            alert('Account created successfully!');
+            window.location.href = 'members.html';
+        });
+    </script>
+</body>
+</html>

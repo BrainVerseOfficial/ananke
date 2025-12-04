@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - ascnedryx</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><a href="index.html">ascnedryx</a></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="signin.html" class="active">Sign In</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="auth-section">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h1 class="auth-title">Welcome Back</h1>
+                <p class="auth-subtitle">Sign in to your account</p>
+                
+                <form class="auth-form" id="signinForm">
+                    <div class="form-group">
+                        <label for="email">Email or Username</label>
+                        <input type="text" id="email" name="email" placeholder="your@email.com or username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="••••••••" required>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p><a href="#" class="forgot-link">Forgot password?</a></p>
+                    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('signinForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const emailOrUsername = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Get stored user data (for demo purposes)
+            const storedUser = JSON.parse(localStorage.getItem('ascnedryx_user'));
+            
+            if (storedUser && 
+                (storedUser.email === emailOrUsername || storedUser.username === emailOrUsername) && 
+                storedUser.password === password) {
+                
+                localStorage.setItem('ascnedryx_loggedIn', 'true');
+                alert('Sign in successful!');
+                window.location.href = 'members.html';
+            } else {
+                alert('Invalid credentials. Please try again or sign up for a new account.');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members Area - ascnedryx</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><a href="index.html">ascnedryx</a></div>
+            <ul class="nav-links">
+                <li><a href="members.html" class="active">Dashboard</a></li>
+                <li><a href="#" id="logoutBtn">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="members-section">
+        <div class="container">
+            <div class="welcome-banner">
+                <h1 class="members-title">Welcome, <span id="userName">Member</span>!</h1>
+                <p class="members-subtitle">This is your exclusive members area</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="card-icon">👤</div>
+                    <h3>Profile</h3>
+                    <p>Manage your account settings and preferences</p>
+                    <button class="btn btn-secondary">View Profile</button>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon">📊</div>
+                    <h3>Analytics</h3>
+                    <p>View your activity statistics and insights</p>
+                    <button class="btn btn-secondary">View Stats</button>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon">📁</div>
+                    <h3>Projects</h3>
+                    <p>Access and manage your projects</p>
+                    <button class="btn btn-secondary">Browse Projects</button>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon">⚙️</div>
+                    <h3>Settings</h3>
+                    <p>Customize your experience</p>
+                    <button class="btn btn-secondary">Manage Settings</button>
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <h2 class="section-title">Recent Activity</h2>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon">✓</div>
+                        <div class="activity-content">
+                            <h4>Account Created</h4>
+                            <p class="activity-time">Just now</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">🎉</div>
+                        <div class="activity-content">
+                            <h4>Welcome to ascnedryx!</h4>
+                            <p class="activity-time">Just now</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 ascnedryx. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Check if user is logged in
+        const isLoggedIn = localStorage.getItem('ascnedryx_loggedIn');
+        
+        if (!isLoggedIn || isLoggedIn !== 'true') {
+            alert('Please sign in to access the members area');
+            window.location.href = 'signin.html';
+        }
+
+        // Display user name
+        const user = JSON.parse(localStorage.getItem('ascnedryx_user'));
+        if (user && user.fullname) {
+            document.getElementById('userName').textContent = user.fullname.split(' ')[0];
+        }
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.setItem('ascnedryx_loggedIn', 'false');
+            alert('You have been logged out');
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>
