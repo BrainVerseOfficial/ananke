@@ -32,6 +32,52 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Validate macOS signing secrets
+        if: matrix.platform == 'macos-latest'
+        env:
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          set -euo pipefail
+          fail=0
+          check_var() {
+            local name="$1"
+            local value="${!name:-}"
+            if [ -z "$value" ]; then
+              echo "::error::$name is missing."
+              fail=1
+            fi
+          }
+          check_var APPLE_CERTIFICATE
+          check_var APPLE_CERTIFICATE_PASSWORD
+          check_var APPLE_SIGNING_IDENTITY
+          check_var APPLE_ID
+          check_var APPLE_PASSWORD
+          check_var APPLE_TEAM_ID
+          if [ "$fail" -ne 0 ]; then
+            echo "::error::macOS signing secrets are incomplete."
+            exit 1
+          fi
+          python3 - <<'PY'
+          import base64, os, sys
+          b64 = os.environ.get("APPLE_CERTIFICATE", "")
+          try:
+              data = base64.b64decode(b64, validate=True)
+          except Exception:
+              print("::error::APPLE_CERTIFICATE is not valid base64.")
+              sys.exit(1)
+          if len(data) < 1024:
+              print("::error::APPLE_CERTIFICATE looks too small; ensure it is a .p12 with a private key.")
+              sys.exit(1)
+          identity = os.environ.get("APPLE_SIGNING_IDENTITY", "")
+          if "Developer ID Application" not in identity:
+              print("::warning::APPLE_SIGNING_IDENTITY does not include 'Developer ID Application'.")
+          PY
+
       - name: Build and publish
         if: matrix.platform == 'windows-latest'
         uses: tauri-apps/tauri-action@v0
