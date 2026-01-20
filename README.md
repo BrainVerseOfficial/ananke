@@ -34,7 +34,7 @@ Download the latest version for your OS from the [Releases](../../releases) page
 We use **Tauri** + **React** to build a lightweight experience.
 ```bash
 # Clone the repo
-git clone [https://github.com/your-repo/ananke.git](https://github.com/your-repo/ananke.git)
+git clone https://github.com/your-repo/ananke.git
 cd ananke
 
 # Install dependencies
