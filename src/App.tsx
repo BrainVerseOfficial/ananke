@@ -424,7 +424,8 @@ function App() {
   const localeTag = locale === "zh" ? "zh-CN" : "en-US";
   const formatDate = (value?: number) => {
     if (!value) return t("notTracked");
-    const date = new Date(value);
+    const normalized = value < 1_000_000_000_000 ? value * 1000 : value;
+    const date = new Date(normalized);
     if (Number.isNaN(date.getTime())) return t("notTracked");
     return new Intl.DateTimeFormat(localeTag, {
       year: "numeric",

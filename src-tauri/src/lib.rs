@@ -513,7 +513,9 @@ fn load_skill(
         .filter(|value| !value.trim().is_empty())
         .unwrap_or_else(|| if is_markdown { extract_description(&body) } else { String::new() });
 
-    let last_modified = fs::metadata(core_file_path)
+    let skill_md_path = skill_dir.join("SKILL.md");
+    let last_modified = fs::metadata(skill_md_path)
+        .or_else(|_| fs::metadata(core_file_path))
         .and_then(|data| data.modified())
         .ok()
         .and_then(|time| time.duration_since(UNIX_EPOCH).ok())
