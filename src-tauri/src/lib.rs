@@ -23,6 +23,7 @@ struct SourceConfig {
 enum McpKind {
     CodexToml,
     ClaudeJson,
+    AntigravityJson,
     OpenCodeJson,
 }
 
@@ -292,8 +293,9 @@ fn source_configs(home: &Path) -> Vec<SourceConfig> {
 }
 
 fn mcp_source_configs(home: &Path) -> Vec<McpSourceConfig> {
-    let claude_primary = home.join(".claude").join(".mcp.json");
-    let claude_alt = home.join(".claude").join("mcp.json");
+    let claude_primary = home.join(".claude.json");
+    let claude_alt = home.join(".claude").join(".mcp.json");
+    let claude_legacy = home.join(".claude").join("mcp.json");
     let codex_path = home.join(".codex").join("config.toml");
     let opencode_path = home
         .join(".config")
@@ -302,7 +304,8 @@ fn mcp_source_configs(home: &Path) -> Vec<McpSourceConfig> {
     let roo_path = home.join(".roo").join("mcp.json");
     let copilot_path = home.join(".copilot").join("mcp.json");
     let cursor_path = home.join(".cursor").join("mcp.json");
-    let gemini_path = home.join(".gemini").join("mcp.json");
+    let gemini_path = home.join(".gemini").join("settings.json");
+    let gemini_legacy = home.join(".gemini").join("mcp.json");
     let trae_path = home.join(".trae").join("mcp.json");
     let goose_path = home.join(".config").join("goose").join("mcp.json");
     let antigravity_primary = home
@@ -331,7 +334,7 @@ fn mcp_source_configs(home: &Path) -> Vec<McpSourceConfig> {
             kind: McpKind::ClaudeJson,
             install_root: home.join(".claude"),
             primary_path: claude_primary.clone(),
-            read_paths: vec![claude_primary, claude_alt],
+            read_paths: vec![claude_primary, claude_alt, claude_legacy],
         },
         McpSourceConfig {
             id: "roo",
@@ -367,7 +370,7 @@ fn mcp_source_configs(home: &Path) -> Vec<McpSourceConfig> {
             kind: McpKind::ClaudeJson,
             install_root: home.join(".gemini"),
             primary_path: gemini_path.clone(),
-            read_paths: vec![gemini_path],
+            read_paths: vec![gemini_path, gemini_legacy],
         },
         McpSourceConfig {
             id: "codex",
@@ -409,7 +412,7 @@ fn mcp_source_configs(home: &Path) -> Vec<McpSourceConfig> {
             id: "antigravity",
             label: "Antigravity",
             format: "json",
-            kind: McpKind::ClaudeJson,
+            kind: McpKind::AntigravityJson,
             install_root: antigravity_root,
             primary_path: antigravity_path.clone(),
             read_paths: vec![antigravity_primary, antigravity_legacy],
@@ -1410,6 +1413,23 @@ fn opencode_to_standard_config(config: &JsonValue) -> JsonValue {
     JsonValue::Object(out)
 }
 
+fn antigravity_to_standard_config(config: &JsonValue) -> JsonValue {
+    let Some(obj) = config.as_object() else {
+        return config.clone();
+    };
+    let mut out = JsonMap::new();
+
+    for (key, value) in obj {
+        if key == "serverUrl" {
+            out.insert("url".to_string(), value.clone());
+        } else if key != "url" || !out.contains_key("url") {
+            out.insert(key.clone(), value.clone());
+        }
+    }
+
+    JsonValue::Object(out)
+}
+
 fn standard_to_opencode_config(config: &JsonValue) -> Result<JsonValue, String> {
     let obj = config
         .as_object()
@@ -1449,6 +1469,29 @@ fn standard_to_opencode_config(config: &JsonValue) -> Result<JsonValue, String> 
     Ok(JsonValue::Object(out))
 }
 
+fn standard_to_antigravity_config(config: &JsonValue) -> Result<JsonValue, String> {
+    let obj = config
+        .as_object()
+        .ok_or_else(|| "MCP server config must be an object".to_string())?;
+    let mut out = JsonMap::new();
+
+    for (key, value) in obj {
+        if key == "serverUrl" {
+            out.insert(key.clone(), value.clone());
+        } else if key != "url" {
+            out.insert(key.clone(), value.clone());
+        }
+    }
+
+    if !out.contains_key("serverUrl") {
+        if let Some(url) = obj.get("url") {
+            out.insert("serverUrl".to_string(), url.clone());
+        }
+    }
+
+    Ok(JsonValue::Object(out))
+}
+
 fn read_mcp_servers(config: &McpSourceConfig, path: &Path) -> Result<Vec<McpServer>, String> {
     let mut servers = Vec::new();
     if !path.exists() {
@@ -1475,6 +1518,19 @@ fn read_mcp_servers(config: &McpSourceConfig, path: &Path) -> Result<Vec<McpServ
                         servers.push(McpServer {
                             id: id.to_string(),
                             config: server.clone(),
+                        });
+                    }
+                }
+            }
+        }
+        McpKind::AntigravityJson => {
+            let value = load_json_value(path)?;
+            if let Some(servers_value) = value.get("mcpServers") {
+                if let Some(map) = servers_value.as_object() {
+                    for (id, server) in map {
+                        servers.push(McpServer {
+                            id: id.to_string(),
+                            config: antigravity_to_standard_config(server),
                         });
                     }
                 }
@@ -1541,6 +1597,25 @@ fn upsert_mcp_servers(
 
             save_json_value(&config.primary_path, &value)?;
         }
+        McpKind::AntigravityJson => {
+            let mut value = load_json_value(&config.primary_path)?;
+            let root = value
+                .as_object_mut()
+                .ok_or_else(|| "Invalid JSON format".to_string())?;
+            let servers_value = root
+                .entry("mcpServers".to_string())
+                .or_insert_with(|| JsonValue::Object(JsonMap::new()));
+            let servers_map = servers_value
+                .as_object_mut()
+                .ok_or_else(|| "Invalid mcpServers format".to_string())?;
+
+            for (id, config_value) in servers {
+                let converted = standard_to_antigravity_config(&config_value)?;
+                servers_map.insert(id, converted);
+            }
+
+            save_json_value(&config.primary_path, &value)?;
+        }
         McpKind::OpenCodeJson => {
             let mut value = load_json_value(&config.primary_path)?;
             let root = value
@@ -1584,7 +1659,7 @@ fn delete_mcp_server_for_source(config: &McpSourceConfig, server_id: &str) -> Re
             }
             save_toml_value(&config.primary_path, &value)?;
         }
-        McpKind::ClaudeJson => {
+        McpKind::ClaudeJson | McpKind::AntigravityJson => {
             let mut value = load_json_value(&config.primary_path)?;
             let root = value
                 .as_object_mut()
@@ -1967,7 +2042,12 @@ fn list_mcp_sources() -> Result<Vec<McpSource>, String> {
     let mut response = Vec::new();
 
     for config in configs {
-        if !config.install_root.is_dir() {
+        let has_config = config
+            .read_paths
+            .iter()
+            .any(|path| path.exists())
+            || config.primary_path.exists();
+        if !config.install_root.is_dir() && !has_config {
             continue;
         }
         let path = resolve_read_path(&config);
